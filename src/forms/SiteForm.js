@@ -8,9 +8,8 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import { styles } from "./formStyles";
-import { copy } from "../dataService";
+import { copy, generatePassword } from "../dataService";
 import { AntDesign } from "@expo/vector-icons";
-import { genPassword } from "../dataService";
 
 export default function SiteForm({ navigation, route }) {
   return (
@@ -108,7 +107,9 @@ export default function SiteForm({ navigation, route }) {
             <Text style={styles.titles}>Пароль:</Text>
             <AntDesign
               style={{}}
-              onPress={() => props.setFieldValue("password", genPassword())}
+              onPress={() =>
+                props.setFieldValue("password", generatePassword(10))
+              }
               name="reload1"
               size={24}
               color="black"

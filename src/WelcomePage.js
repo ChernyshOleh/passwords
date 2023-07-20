@@ -16,6 +16,11 @@ export default function WelcomePage({ navigation }) {
 
   useEffect(() => {
     (async function () {
+      // AsyncStorage.clear();
+      const userData = await AsyncStorage.getItem("user");
+      if (!userData) {
+        navigation.navigate("RegistrationForm");
+      }
       const data = await AsyncStorage.getItem("password");
       if (data) {
         setUserPassword(data);

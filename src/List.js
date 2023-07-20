@@ -5,10 +5,13 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
+  Button,
 } from "react-native";
 import { useState, useEffect } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { getData, add, remove } from "./dataService";
+import { getDocuments } from "./firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function List({ navigation, route }) {
   const [list, setList] = useState([]);
@@ -34,7 +37,23 @@ export default function List({ navigation, route }) {
     if (data !== null) {
       setList(JSON.parse(data));
     } else {
-      setList([]);
+      try {
+        const data = await getDocuments(KEY, route.params.uid);
+        await AsyncStorage.setItem(KEY, JSON.stringify(data));
+        setList(data);
+      } catch (error) {
+        console.log("Не удалось получить данные из firebase: ", error);
+      }
+    }
+  }
+
+  async function getDataFromFirebase() {
+    try {
+      const data = await getDocuments(KEY, route.params.uid);
+      await AsyncStorage.setItem(KEY, JSON.stringify(data));
+      setList(data);
+    } catch (error) {
+      console.log("Не удалось получить данные из firebase: ", error);
     }
   }
 
@@ -151,6 +170,7 @@ export default function List({ navigation, route }) {
           color="black"
         />
       </TouchableOpacity>
+      <Button title="запросить данные" onPress={getDataFromFirebase} />
     </View>
   );
 }

@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import { styles } from "./formStyles";
-import { genPassword } from "../dataService";
+import { generatePassword } from "../dataService";
 import { AntDesign } from "@expo/vector-icons";
 import { copy } from "../dataService";
 
@@ -108,7 +108,9 @@ export default function SocialForm({ navigation, route }) {
             <Text style={styles.titles}>Пароль:</Text>
             <AntDesign
               style={{}}
-              onPress={() => props.setFieldValue("password", genPassword())}
+              onPress={() =>
+                props.setFieldValue("password", generatePassword(10))
+              }
               name="reload1"
               size={24}
               color="black"

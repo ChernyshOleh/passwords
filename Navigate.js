@@ -10,6 +10,8 @@ import OtherForm from "./src/forms/OtherForm";
 import WelcomePage from "./src/WelcomePage";
 import ClearSearch from "./src/ClearSearch";
 import ChangePassword from "./src/ChangePassword";
+import RegistrationForm from "./src/forms/RegistrationForm";
+import LoginForm from "./src/forms/LoginForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +26,28 @@ export default function Navigate() {
             title: "ПАРОЛИ",
             headerStyle: { backgroundColor: "black" },
             headerTitleStyle: { color: "white" },
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="LoginForm"
+          component={LoginForm}
+          options={{
+            title: "Вход",
+            headerStyle: { backgroundColor: "black" },
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "white",
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="RegistrationForm"
+          component={RegistrationForm}
+          options={{
+            title: "Регистрация",
+            headerStyle: { backgroundColor: "black" },
+            headerTitleStyle: { color: "white" },
+            headerTintColor: "white",
             headerTitleAlign: "center",
           }}
         />
