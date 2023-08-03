@@ -19,7 +19,7 @@ export default function WelcomePage({ navigation }) {
       // AsyncStorage.clear();
       const userData = await AsyncStorage.getItem("user");
       if (!userData) {
-        navigation.navigate("RegistrationForm");
+        navigation.replace("RegistrationForm");
       }
       const data = await AsyncStorage.getItem("password");
       if (data) {
