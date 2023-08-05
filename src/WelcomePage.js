@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
   TextInput,
   View,
@@ -7,19 +7,29 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import { AsyncContext } from "./context";
+import { AppLoader } from "./AppLoader";
 
 export default function WelcomePage({ navigation }) {
   const [password, setPassword] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+
+  const userContext = useContext(AsyncContext);
 
   useEffect(() => {
     (async function () {
+      console.log(userContext.user);
       // AsyncStorage.clear();
       const userData = await AsyncStorage.getItem("user");
       if (!userData) {
-        navigation.replace("RegistrationForm");
+        //userContext.userFromAsync();
+        setTimeout(() => navigation.replace("RegistrationForm"), 5000);
+        // console.log(userContext.user);
+      } else {
+        setTimeout(() => setIsReady(true), 5000);
       }
       const data = await AsyncStorage.getItem("password");
       if (data) {
@@ -27,7 +37,7 @@ export default function WelcomePage({ navigation }) {
         setIsRegistered(true);
       }
     })();
-  });
+  }, [userContext.user]);
 
   const createPassword = () => {
     AsyncStorage.setItem("password", password);
@@ -42,44 +52,47 @@ export default function WelcomePage({ navigation }) {
       setShowAlert(true);
     }
   };
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>
-        {isRegistered ? "Введите пароль:" : "Придумайте пароль (до 10 цифр):"}
-      </Text>
-      {showAlert && <Text style={styles.alert}>*неверный пароль</Text>}
-      <TextInput
-        value={password}
-        keyboardType="numeric"
-        autoFocus={true}
-        style={styles.input}
-        maxLength={10}
-        secureTextEntry={true}
-        onChangeText={(value) => setPassword(value)}
-      />
-      {isRegistered ? (
-        <View style={{ alignItems: "center" }}>
-          <TouchableOpacity onPress={() => enterPassword()}>
+  if (isReady) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.header}>
+          {isRegistered ? "Введите пароль:" : "Придумайте пароль (до 10 цифр):"}
+        </Text>
+        {showAlert && <Text style={styles.alert}>*неверный пароль</Text>}
+        <TextInput
+          value={password}
+          keyboardType="numeric"
+          autoFocus={true}
+          style={styles.input}
+          maxLength={10}
+          secureTextEntry={true}
+          onChangeText={(value) => setPassword(value)}
+        />
+        {isRegistered ? (
+          <View style={{ alignItems: "center" }}>
+            <TouchableOpacity onPress={() => enterPassword()}>
+              <Text style={styles.btn}>Ок</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setPassword("");
+                setShowAlert(false);
+                navigation.navigate("ChangePassword");
+              }}
+            >
+              <Text style={styles.btn2}>Изменить пароль</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <TouchableOpacity onPress={() => createPassword()}>
             <Text style={styles.btn}>Ок</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => {
-              setPassword("");
-              setShowAlert(false);
-              navigation.navigate("ChangePassword");
-            }}
-          >
-            <Text style={styles.btn2}>Изменить пароль</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <TouchableOpacity onPress={() => createPassword()}>
-          <Text style={styles.btn}>Ок</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
+        )}
+      </View>
+    );
+  } else {
+    return <AppLoader />;
+  }
 }
 
 const styles = StyleSheet.create({
