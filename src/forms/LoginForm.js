@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import { View, TextInput, Text, TouchableOpacity, Alert } from "react-native";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { styles } from "./formStyles";
+import { handleErrors } from "../dataService";
 
 export default function LoginForm({ navigation }) {
   const [email, setEmail] = useState("");
@@ -17,7 +18,10 @@ export default function LoginForm({ navigation }) {
       // Дополнительные действия после успешной авторизации...
       console.log("Login successful:", response.user);
     } catch (error) {
-      console.error("Login error:", error);
+      const message = handleErrors(error);
+      Alert.alert("Проверте правильность введённых данных", message, [
+        { text: "OK", style: "OK" },
+      ]);
     }
   };
 

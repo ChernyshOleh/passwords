@@ -22,14 +22,14 @@ export default function WelcomePage({ navigation }) {
   useEffect(() => {
     (async function () {
       console.log(userContext.user);
-      // AsyncStorage.clear();
+      //await AsyncStorage.clear();
       const userData = await AsyncStorage.getItem("user");
       if (!userData) {
         //userContext.userFromAsync();
-        setTimeout(() => navigation.replace("RegistrationForm"), 5000);
+        setTimeout(() => navigation.replace("RegistrationForm"), 1500);
         // console.log(userContext.user);
       } else {
-        setTimeout(() => setIsReady(true), 5000);
+        setTimeout(() => setIsReady(true), 1500);
       }
       const data = await AsyncStorage.getItem("password");
       if (data) {
@@ -37,12 +37,13 @@ export default function WelcomePage({ navigation }) {
         setIsRegistered(true);
       }
     })();
-  }, [userContext.user]);
+  }, [isReady, userPassword, isRegistered]);
 
-  const createPassword = () => {
-    AsyncStorage.setItem("password", password);
+  const createPassword = async () => {
+    await AsyncStorage.setItem("password", password);
     setUserPassword(password);
     setPassword("");
+    setIsReady(true);
   };
 
   const enterPassword = () => {

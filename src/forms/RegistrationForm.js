@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import { View, TextInput, Text, TouchableOpacity, Alert } from "react-native";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { styles } from "./formStyles";
+import { handleErrors } from "../dataService";
 
 export default function RegistrationForm({ navigation }) {
   const [email, setEmail] = useState("");
@@ -19,7 +20,10 @@ export default function RegistrationForm({ navigation }) {
       // Дополнительные действия после успешной регистрации...
       console.log("Registration successful:", response.user);
     } catch (error) {
-      console.error("Registration error:", error);
+      const message = handleErrors(error);
+      Alert.alert("Проверте правильность введённых данных", message, [
+        { text: "OK", style: "OK" },
+      ]);
     }
   };
 

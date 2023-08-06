@@ -80,3 +80,20 @@ export const copy = async (value) => {
     Alert.alert("Скопировано в буфер обмена");
   }
 };
+
+// Функция-обработчик ошибок
+export const handleErrors = (error) => {
+  const message = error.message.slice(22);
+  switch (message) {
+    case "email-already-in-use).":
+      return "Такой email уже используется.";
+    case "user-not-found).":
+      return "Такой пользователь не найден.";
+    case "invalid-email).":
+      return "Введите корректный email.";
+    case "uld be at least 6 characters (auth/weak-password).":
+      return "Пароль должен состоять минимум из 6 символов.";
+    default:
+      return "Произошла ошибка. Попробуйте ещё раз.";
+  }
+};
