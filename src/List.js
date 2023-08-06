@@ -12,6 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { getData, add, remove } from "./dataService";
 import { getDocuments } from "./firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { THEM_COLORS } from "./them";
 
 export default function List({ navigation, route }) {
   const [list, setList] = useState([]);
@@ -170,7 +171,7 @@ export default function List({ navigation, route }) {
           color="black"
         />
       </TouchableOpacity>
-      <Button title="запросить данные" onPress={getDataFromFirebase} />
+      {/* <Button title="запросить данные" onPress={getDataFromFirebase} /> */}
     </View>
   );
 }
@@ -178,7 +179,7 @@ export default function List({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#9F5AED",
+    backgroundColor: THEM_COLORS.main_color,
     justifyContent: "flex-end",
   },
   plus: {
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     textAlign: "center",
     padding: 10,
-    backgroundColor: "#7543AF",
+    backgroundColor: THEM_COLORS.color_btn_plus,
   },
   block: {
     flexDirection: "row",
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     margin: 2,
     padding: 10,
-    backgroundColor: "#DCCCED",
+    backgroundColor: THEM_COLORS.color_of_list,
   },
   data: {
     width: "93%",

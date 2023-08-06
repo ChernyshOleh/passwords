@@ -11,6 +11,7 @@ import {
 import { getUserId } from "./dataService";
 import { addDocuments, removeMissingDocuments, getDocuments } from "./firebase";
 import { signOut, getAuth } from "firebase/auth";
+import { THEM_COLORS } from "./them";
 
 export default function Main({ navigation }) {
   const [userId, setUserId] = useState("");
@@ -132,11 +133,12 @@ export default function Main({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#9F5AED",
+    backgroundColor: THEM_COLORS.main_color,
     justifyContent: "center",
   },
   block: {
-    backgroundColor: "#DCCCED",
+    color: THEM_COLORS.text_color_1,
+    backgroundColor: THEM_COLORS.color_of_list,
     borderRadius: 5,
     borderWidth: 2,
     borderColor: "black",
@@ -147,8 +149,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   bottomBtns: {
-    backgroundColor: "crimson",
-    color: "#fff",
+    backgroundColor: THEM_COLORS.color_btn,
+    color: THEM_COLORS.text_color_2,
     fontSize: 20,
     padding: 10,
     margin: 5,

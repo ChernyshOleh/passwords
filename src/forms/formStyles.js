@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { THEM_COLORS } from "../them";
 
 export const styles = StyleSheet.create({
   container: {
@@ -31,6 +32,6 @@ export const styles = StyleSheet.create({
     backgroundColor: "crimson",
     width: "50%",
     marginHorizontal: "25%",
-    color: "white",
+    color: THEM_COLORS.text_color_2,
   },
 });
