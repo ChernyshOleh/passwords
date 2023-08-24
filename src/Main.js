@@ -26,6 +26,8 @@ export default function Main({ navigation }) {
     (async function a() {
       const id = await getUserId();
       setUserId(id);
+      const data = await AsyncStorage.getItem("other");
+      console.log(data);
     })();
     // async function get() {
     //   const data = await getAllData();
@@ -139,8 +141,8 @@ const styles = StyleSheet.create({
   block: {
     color: THEM_COLORS.text_color_1,
     backgroundColor: THEM_COLORS.color_of_list,
-    borderRadius: 5,
-    borderWidth: 2,
+    // borderRadius: 5,
+    borderWidth: 1,
     borderColor: "black",
     fontSize: 20,
     padding: 10,
